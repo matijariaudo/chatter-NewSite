@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        const isProduction = window.location.hostname === 'chatter.plus';
+        if (isProduction) {
+            // Cargar Google Analytics solo en producción
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-K17RP1YVV3';
+            document.head.appendChild(script);
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-K17RP1YVV3');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swagger UI</title>
+    <link rel="canonical" href="https://www.chatter.plus/documentation">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <style>
+        /* Tu CSS personalizado */
+        .swagger-ui .topbar {
+            
+            color:#FFF;
+        }
+
+        .swagger-ui .info {
+            
+            color:#FFF;
+        }
+
+        .swagger-ui .scheme-container {
+            background-color: #353535;
+            border: 0px;
+            color:#FFF;
+        }
+
+        .swagger-ui .topbar-wrapper .link span {
+            color: hotpink !important;
+            color:#FFF;
+        }
+
+        .custom-logo {
+            height: 40px;
+            margin-right: 10px;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+            }
+
+            ::-webkit-scrollbar-thumb {
+            background: #ffffff32;
+            border: 1px solid #dddddd00;
+            border-radius: 5px;
+            }
+
+            ::-webkit-scrollbar-track {
+            background-color: #383737 ;
+            border: 1px solid none;
+            }
+    </style>
+</head>
+<body>
+    <div id="swagger-ui"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui-standalone-preset.js"></script>
+    <script>
+        window.onload = function() {
+            const ui = SwaggerUIBundle({
+                url: "swagger.json", // URL de tu especificación de Swagger
+                dom_id: '#swagger-ui',
+                presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIStandalonePreset
+                ],
+                layout: "StandaloneLayout"
+            });
+
+            // Agregar tu logo
+            const topbar = document.querySelector('.topbar-wrapper .link');
+            const aa=document.querySelector('.swagger-ui .scheme-container')
+
+            logo_src = "https://chatter.plus/assets/img/favicon.png"
+            $(".topbar").remove()
+            setInterval(() => {
+                $('.scheme-container').find("button").eq(0).css("background","#5AE4A8").css("color","#FFF")
+                $('.scheme-container').find("button").eq(0).find('span').eq(0).html("Set your API key")
+                $('.scheme-container').find("select").eq(0).css("background","#000").css("color","#FFF")
+                $(".servers-title").html("Basic Url")
+                $(".title").html("")
+                $(".title").prepend(`<img src="${logo_src}" style="width:25px;margin:0px 20px;display:none">Chatter<b style="color:#5AE4A8">+</b> API`)
+                // $(".info").html("") 
+                $("body").css("background","#353535")
+                $("p").css("color","#FFF")
+                $("h2").css("color","#FFF")
+                $("h4").css("color","#FFF")
+                $("h3").css("color","#FFF")
+                $("h5").css("color","#FFF")
+                $("span").css("color","#FFF")
+                $("td").css("color","#FFF")
+                $(".tablinks").css("color","#FFF")
+                $(".opblock-summary-description").css("color","#FFF")
+                $(".opblock-section-header").css("background","#5AE4A8")
+                $(".auth-container").find("h4").eq(0).css("color","#000")
+                a=$("#msg").html()
+                if(!a){$(".auth-container").find("label").eq(0).before(`<p id="msg" style="color:#000;margin-bottom:20px">Set API Key here. You will then be able to test each <b>"End point"</b> from the documentation by clicking "Try it out" and modifying the request body parameters.</p>`)}
+                if(a){$("#msg").css("color","#000");}
+                $(".auth-container").css("padding","0px")
+                $(".modal-ux-content").css("padding","0px 20px 10px 20px")
+                $(".modal-ux").css("background","#5AE4A8")
+                $(".modal-ux-header").css("border","0px")
+                $(".modal-ux-header").css("border","0px")
+                $(".auth-container").find("input").eq(0).css("width","100%")
+                $(".auth-container").find("input").eq(0).css("background","none")
+                $(".auth-container").find("input").eq(0).css("border","1px solid #000")
+                $(".auth-container").find(".modal-btn").css("border","1px solid #000")
+                $(".auth-container").find(".authorize").eq(0).css("background","#000").css("color","#5AE4A8")
+                $(".auth-container").find("input").eq(0).attr("placeholder","Insert your API Key here")
+                $(".auth-container").find("label").eq(0).html("Your API Key")
+                $(".modal-ux-header").find("h3").eq(0).css("color","#000")
+                $(".modal-ux-header").find("h3").eq(0).html("Set your API key")
+            }, 100);
+            
+        }
+    </script>
+</body>
+</html>
