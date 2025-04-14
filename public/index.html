@@ -37,6 +37,7 @@
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
@@ -98,7 +99,7 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="/app">Sign In / Sing Up</a>
+      <a class="btn-getstarted" href="/app/signin" id="btnInitSession">Sign In / Sing Up</a>
 
     </div>
   </header>
@@ -106,7 +107,7 @@
   <main class="main">
 
     <!-- Hero Section -->
-    <section id="hero" class="hero section">
+    <section id="hero" class="hero section track-section">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
@@ -128,7 +129,7 @@
               </p>
 
               <div class="hero-buttons">
-                <a href="/app" class="btn btn-primary me-0 me-sm-2 mx-1">Get Started</a>
+                <a href="/app/signup" id="btnSignUp" class="btn btn-primary me-0 me-sm-2 mx-1">Get Started</a>
               </div>
             </div>
           </div>
@@ -204,7 +205,7 @@
     </section><!-- /Hero Section -->
 
     <!-- About Section -->
-    <section id="about" class="about section">
+    <section id="about" class="about section track-section">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
@@ -252,7 +253,7 @@
     </section><!-- /About Section -->
 
     <!-- Features Section -->
-    <section id="features" class="features section">
+    <section id="features" class="features section track-section">
 
       <div class="container section-title" data-aos="fade-up">
         <h2>Why Use Our API?</h2>
@@ -339,7 +340,7 @@
 
 
     <!-- Features Cards Section -->
-<section id="features-cards" class="features-cards section">
+<section id="features-cards" class="features-cards section track-section">
 
   <div class="container">
 
@@ -385,7 +386,7 @@
 
 
 <!-- Pricing Section -->
-<section id="pricing" class="pricing section light-background">
+<section id="pricing" class="pricing section light-background track-section">
 
   <div class="container section-title" data-aos="fade-up">
     <h2>Pricing</h2>
@@ -414,7 +415,7 @@
             <li><i class="bi bi-x-circle-fill text-danger"></i> No support</li>
             
           </ul>
-          <a href="#" class="btn" style="border: 1px solid #b0b0b0;">Start for Free <i class="bi bi-arrow-right"></i></a>
+          <a href="/app/signup" class="btn btnPrice1" style="border: 1px solid #b0b0b0;">Start for Free <i class="bi bi-arrow-right"></i></a>
         </div>
       </div>
 
@@ -437,7 +438,7 @@
             <li><i class="bi bi-check-circle-fill"></i> Webhooks & alerts</li>
             <li><i class="bi bi-check-circle-fill"></i> $3.90 per extra instance</li>
           </ul>
-          <a href="#" class="btn btn-light">Buy Now <i class="bi bi-arrow-right"></i></a>
+          <a href="/app/signup" id="btnPrice2" class="btn btn-light">Buy Now <i class="bi bi-arrow-right"></i></a>
         </div>
       </div>
 
@@ -458,7 +459,7 @@
             <li><i class="bi bi-check-circle-fill"></i> All features from Pro</li>
             <li><i class="bi bi-check-circle-fill"></i> Priority support</li>
           </ul>
-          <a href="#" class="btn btn-primary">Buy Now <i class="bi bi-arrow-right"></i></a>
+          <a href="/app/signup" id="btnPrice3" class="btn btn-primary">Buy Now <i class="bi bi-arrow-right"></i></a>
         </div>
       </div>
 
@@ -469,7 +470,7 @@
 
 
 <!-- Faq Section -->
-<section class="faq-9 faq section light-background" id="faq">
+<section class="faq-9 faq section light-background track-section" id="faq">
 
   <div class="container">
     <div class="row">
@@ -560,7 +561,7 @@
 
 
 <!-- Call To Action 2 Section -->
-<section id="call-to-action-2" class="call-to-action-2 section dark-background">
+<section id="call-to-action-2" class="call-to-action-2 section dark-background track-section">
 
   <div class="container">
     <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
@@ -568,7 +569,7 @@
         <div class="text-center">
           <h3>Start sending WhatsApp messages like a pro</h3>
           <p>No templates. No limits. Just simple, flexible messaging for devs who want control without the headaches of the official API.</p>
-          <a class="cta-btn" href="https://chatter.plus/app">Try it now – it’s free</a>
+          <a class="cta-btn btnPrice1" href="/app/signup">Try it now – it’s free</a>
         </div>
       </div>
     </div>
@@ -578,7 +579,7 @@
 
 
     <!-- Contact Section -->
-    <section id="contact" class="contact section light-background">
+    <section id="contact" class="contact section light-background track-section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
@@ -657,7 +658,7 @@
                     <div class="error-message"></div>
                     <div class="sent-message">Your message has been sent. Thank you!</div>
 
-                    <button type="submit" class="btn">Send Message</button>
+                    <button type="submit" class="btn btn_send_contact">Send Message</button>
                   </div>
 
                 </div>
@@ -747,6 +748,46 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+    $(window).on('scroll', function () {
+      $('.track-section').each(function () {
+        const top = $(this).offset().top;
+        const bottom = top + $(this).outerHeight();
+        const scroll = $(window).scrollTop() + $(window).height() / 2;
+
+        if (scroll >= top && scroll <= bottom && !$(this).data('viewed')) {
+          $(this).data('viewed', true);
+
+          gtag('event', 'view_section', {
+            section: $(this).attr('id')
+          });
+        }
+      });
+    });
+    $('#btnInitSession').on('click', function () {
+      gtag('event', 'click_init_session');
+    });
+    $("#btnSignUp").on('click', function () {
+      gtag('event', 'click_register_user');
+    });
+    $(".btnPrice1").on('click', function () {
+      gtag('event', 'click_login_free');
+    });
+    $("#btnPrice2").on('click', function () {
+      gtag('event', 'click_login_pay');
+    });
+    $("#btnPrice3").on('click', function () {
+      gtag('event', 'click_login_bigpay');
+    });
+
+    $(".faq-item").on('click', function () {
+      gtag('event', 'click_questions');
+    });
+    
+    $(".btn_send_contact").on('click', function () {
+      gtag('event', 'send_contact');
+    });
+  </script>
 
 </body>
 
