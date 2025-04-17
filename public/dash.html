@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+  <div class="container mt-5">
+    <!-- Resumen -->
+    <div class="row text-center mb-4">
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5>Total Instances</h5>
+            <h3 id="total-instances">-</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5>Active Instances</h5>
+            <h3 id="active-instances">-</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5>Total Users</h5>
+            <h3 id="total-users">-</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla -->
+    <div class="card">
+      <div class="card-header">
+        <h5>Users & Instances</h5>
+      </div>
+      <div class="card-body table-responsive">
+        <table class="table table-bordered" id="user-table">
+          <thead class="table-dark">
+            <tr>
+              <th>User ID</th>
+              <th>Email Valid</th>
+              <th>Role</th>
+              <th>Plan</th>
+              <th>Instance ID</th>
+              <th>Sent</th>
+              <th>Received</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      $.post("/api/instance/resume", function (res) {
+        const user = res.data.users;
+        const instances = res.data.instances.instances;
+        const statics = res.data.instances.statics;
+
+        // Totales
+        $("#total-instances").text(instances.length);
+        $("#active-instances").text(user.estado ? 1 : 0);
+        $("#total-users").text(1); // Ya que devuelve 1 user
+
+        // Tabla
+        const tr = `
+          <tr>
+            <td>${user.uid}</td>
+            <td>${user.email_valid}</td>
+            <td>${user.rol}</td>
+            <td>${user.plan}</td>
+            <td>${instances[0].id}</td>
+            <td>${statics[0].messageSent.counter}</td>
+            <td>${statics[0].messageReceived.counter}</td>
+          </tr>
+        `;
+        $("#user-table tbody").append(tr);
+      });
+    });
+  </script>
+</body>
+</html>
