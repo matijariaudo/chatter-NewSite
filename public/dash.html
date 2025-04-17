@@ -61,32 +61,40 @@
   </div>
 
   <script>
-    $(document).ready(function () {
-      $.post("/api/instance/resume", function (res) {
-        const user = res.data.users;
-        const instances = res.data.instances.instances;
-        const statics = res.data.instances.statics;
 
-        // Totales
-        $("#total-instances").text(instances.length);
-        $("#active-instances").text(user.estado ? 1 : 0);
-        $("#total-users").text(1); // Ya que devuelve 1 user
+      $(document).ready(function () {
+        $.post("/api/instance/resume", function (res) {
+          const users = res.data.users;
+          const instances = res.data.instances.instances;
 
-        // Tabla
-        const tr = `
-          <tr>
-            <td>${user.uid}</td>
-            <td>${user.email_valid}</td>
-            <td>${user.rol}</td>
-            <td>${user.plan}</td>
-            <td>${instances[0].id}</td>
-            <td>${statics[0].messageSent.counter}</td>
-            <td>${statics[0].messageReceived.counter}</td>
-          </tr>
-        `;
-        $("#user-table tbody").append(tr);
+          // Resumen
+          $("#total-instances").text(instances.length);
+          $("#total-users").text(users.length);
+
+          // Tabla
+          users.forEach(user => {
+            const total = user.apiPass.length;
+            const activas = total;  // Suponiendo todas activas por falta de info
+            const eliminadas = 0;
+            const paradas = 0;
+
+            const tr = `
+              <tr>
+                <td>${user.nombre}</td>
+                <td>${user.correo}</td>
+                <td>${user.email_valid ? '✅' : '❌'}</td>
+                <td>${user.google ? 'Google' : 'Manual'}</td>
+                <td>${total}</td>
+                <td>${activas}</td>
+                <td>${eliminadas}</td>
+                <td>${paradas}</td>
+              </tr>
+            `;
+            $("#user-table tbody").append(tr);
+          });
+        });
       });
-    });
+
   </script>
 </body>
 </html>
