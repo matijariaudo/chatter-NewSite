@@ -48,10 +48,20 @@
               <th>User ID</th>
               <th>Email Valid</th>
               <th>Role</th>
-              <th>Plan</th>
-              <th>Instance ID</th>
-              <th>Sent</th>
-              <th>Received</th>
+              <th>Gmail</th>
+              <th>ApiKeys</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <table class="table table-bordered" id="instace-table">
+          <thead class="table-dark">
+            <tr>
+              <th>User ID</th>
+              <th>Enviado</th>
+              <th>Recibido</th>
+              <th>Media Sent</th>
+              <th>Media received</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -66,31 +76,40 @@
         $.post("/api/instance/resume", function (res) {
           const users = res.data.users;
           const instances = res.data.instances.instances;
+          const statics = res.data.instances.statics;
 
           // Resumen
           $("#total-instances").text(instances.length);
           $("#total-users").text(users.length);
-
           // Tabla
           users.forEach(user => {
-            const total = user.apiPass.length;
-            const activas = total;  // Suponiendo todas activas por falta de info
-            const eliminadas = 0;
-            const paradas = 0;
-
+            const apiPass = user.apiPass.length;
+            
             const tr = `
               <tr>
                 <td>${user.nombre}</td>
                 <td>${user.correo}</td>
                 <td>${user.email_valid ? '✅' : '❌'}</td>
                 <td>${user.google ? 'Google' : 'Manual'}</td>
-                <td>${total}</td>
-                <td>${activas}</td>
-                <td>${eliminadas}</td>
-                <td>${paradas}</td>
+                <td>${apiPass}</td>
               </tr>
             `;
             $("#user-table tbody").append(tr);
+          });
+        instances.forEach((instance,i) => {
+            console.log(statics[i])
+            const {messageSent,messageReceived,mediaReceived,mediaSent} = statics[i]
+            
+            const tr = `
+              <tr>
+                <td>${instance.id}</td>
+                <td>${messageSent.counter}</td>
+                <td>${messageReceived.counter}</td>
+                <td>${mediaReceived.counter}</td>
+                <td>${mediaSent.counter }</td>
+              </tr>
+            `;
+            $("#instace-table tbody").append(tr);
           });
         });
       });
