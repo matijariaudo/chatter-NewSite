@@ -34,6 +34,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
+  <link href="assets/css/consola.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
@@ -109,7 +110,7 @@
                 <span class="accent-text">for bussines</span>
               </h1>
               <p class="mb-4 mb-md-4">
-                Send and receive WhatsApp messages instantly — no limits, no setup, send for <b>free</b>.
+                Send and receive messages, manage chats, groups, and channels easily with our enterprise-grade API. <b style="background: #000000a0;color:#77f2bf;padding:2px">Pay per WhatsApp account</b>, no pay-per-message fees.
               </p>
               <div class="hero-buttons">
                 <a href="/app/signup" id="btnSignUp" class="btn btn-primary me-0 me-sm-2 mx-1">Get Started</a>
@@ -141,10 +142,143 @@
 
     </section><!-- /Hero Section -->
 
+    <section class="about section track-section">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>How to use our API?</h2>
+        <p>Everything you need to send WhatsApp messages fast, free, and without limits.</p>
+      </div>
+      <div class="container" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-12 col-md-8 offset-md-2">
+          <!-- Tabs -->
+          <ul class="nav nav-tabs mb-3" id="codeTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#curl" type="button" role="tab" style="color:#000">cURL</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#php" type="button" role="tab" style="color:#000">PHP</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#js" type="button" role="tab" style="color:#000">JavaScript</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#python" type="button" role="tab" style="color:#000">Python</button>
+            </li>
+          </ul>
+
+          <!-- Tab content -->
+          <div class="tab-content">
+
+            <!-- CURL -->
+            <div class="tab-pane fade show active" id="curl" role="tabpanel">
+              <div class="terminal">
+                <div class="terminal-header">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                </div>
+                <pre class="terminal-body"><span class="prompt">$</span> curl --location 'https://chatter.plus/api/instance/send' \
+          --header 'Content-Type: application/json' \
+          --header 'Authorization: Bearer <b style="color:#77f2bf">API_TOKEN</b>' \
+          --data-raw '{
+              "instanceId":"<b style="color:#77f2bf">YOUR_INSTANCE_ID</b>", 
+              "message":"<b style="color:#f2b277">Your first message</b>", 
+              "remoteJid":"<b style="color:#77f2bf">WHATSAPP_NUMBER</b>@s.whatsapp.net" 
+          }'</pre>
+              </div>
+            </div>
+
+            <!-- PHP -->
+            <div class="tab-pane fade" id="php" role="tabpanel">
+              <div class="terminal">
+                <div class="terminal-header">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                </div>
+                <pre class="terminal-body"><span class="prompt">&gt;&gt;&gt;</span> &lt;?php
+          $curl = curl_init();
+          curl_setopt_array($curl, [
+            CURLOPT_URL => "https://chatter.plus/api/instance/send",
+            CURLOPT_POST => true,
+            CURLOPT_HTTPHEADER => [
+              "Content-Type: application/json",
+              "Authorization: Bearer <b style="color:#77f2bf">API_TOKEN</b>"
+            ],
+            CURLOPT_POSTFIELDS => json_encode([
+              "instanceId" => "<b style="color:#77f2bf">YOUR_INSTANCE_ID</b>",
+              "message" => "<b style="color:#f2b277">Your first message</b>",
+              "remoteJid" => "<b style="color:#77f2bf">WHATSAPP_NUMBER</b>@s.whatsapp.net"
+            ])
+          ]);
+          $response = curl_exec($curl);
+          curl_close($curl);</pre>
+              </div>
+            </div>
+
+            <!-- JS -->
+            <div class="tab-pane fade" id="js" role="tabpanel">
+              <div class="terminal">
+                <div class="terminal-header">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                </div>
+                <pre class="terminal-body"><span class="prompt">&gt;</span> fetch("https://chatter.plus/api/instance/send", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer <b style="color:#77f2bf">API_TOKEN</b>"
+            },
+            body: JSON.stringify({
+              instanceId: "<b style="color:#77f2bf">YOUR_INSTANCE_ID</b>",
+              message: "<b style="color:#f2b277">Your first message</b>",
+              remoteJid: "<b style="color:#77f2bf">WHATSAPP_NUMBER</b>@s.whatsapp.net"
+            })
+          })
+          .then(res =&gt; res.json())
+          .then(console.log);</pre>
+              </div>
+            </div>
+
+            <!-- Python -->
+            <div class="tab-pane fade" id="python" role="tabpanel">
+              <div class="terminal">
+                <div class="terminal-header">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                </div>
+                <pre class="terminal-body"><span class="prompt">&gt;&gt;&gt;</span> import requests
+
+          headers = {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer <b style="color:#77f2bf">API_TOKEN</b>"
+          }
+
+          data = {
+            "instanceId": "<b style="color:#77f2bf">YOUR_INSTANCE_ID</b>",
+            "message": "<b style="color:#f2b277">Your first message</b>",
+            "remoteJid": "<b style="color:#77f2bf">WHATSAPP_NUMBER</b>@s.whatsapp.net"
+          }
+
+          response = requests.post("https://chatter.plus/api/instance/send", headers=headers, json=data)
+          print(response.json())</pre>
+              </div>
+            </div>
+
+          </div>
+
+
+
+          <a class="btn" href="/app/documentation" style="background-color: #77f2bf;border-radius: 100px;color:#FFF">See all documentation</a>
+        </div>
+      </div>
+    </section>
+
     <!-- About Section -->
     <section id="about" class="about section track-section">
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="container" data-aos="fade-up" data-aos-delay="200">
 
         <div class="row gy-4 align-items-center justify-content-between">
 
